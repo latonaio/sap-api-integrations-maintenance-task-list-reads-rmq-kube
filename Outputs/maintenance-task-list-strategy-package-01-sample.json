@@ -1,0 +1,64 @@
+{
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller/caller.go#L149",
+	"function": "sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller.(*SAPAPICaller).StrategyPackage",
+	"level": "INFO",
+	"message": [
+		{
+			"TaskListType": "A",
+			"TaskListGroup": "1",
+			"TaskListGroupCounter": "1",
+			"TaskListSequence": "0",
+			"TaskListOperationInternalId": "1",
+			"MaintenancePackage": "1",
+			"MaintPckgTskListOpAllocIntNmbr": "1",
+			"MaintenancePackageText": "Monthly",
+			"MaintenanceTaskListOperation": "10",
+			"OperationText": "Check the pump",
+			"MaintTaskListSubOperation": "",
+			"ChangeNumber": ""
+		},
+		{
+			"TaskListType": "A",
+			"TaskListGroup": "1",
+			"TaskListGroupCounter": "1",
+			"TaskListSequence": "0",
+			"TaskListOperationInternalId": "2",
+			"MaintenancePackage": "2",
+			"MaintPckgTskListOpAllocIntNmbr": "2",
+			"MaintenancePackageText": "Quarterly",
+			"MaintenanceTaskListOperation": "20",
+			"OperationText": "Check the Bearings",
+			"MaintTaskListSubOperation": "",
+			"ChangeNumber": ""
+		},
+		{
+			"TaskListType": "A",
+			"TaskListGroup": "1",
+			"TaskListGroupCounter": "1",
+			"TaskListSequence": "0",
+			"TaskListOperationInternalId": "3",
+			"MaintenancePackage": "3",
+			"MaintPckgTskListOpAllocIntNmbr": "3",
+			"MaintenancePackageText": "Half-yearly",
+			"MaintenanceTaskListOperation": "30",
+			"OperationText": "Check the coupling",
+			"MaintTaskListSubOperation": "",
+			"ChangeNumber": ""
+		},
+		{
+			"TaskListType": "A",
+			"TaskListGroup": "1",
+			"TaskListGroupCounter": "1",
+			"TaskListSequence": "0",
+			"TaskListOperationInternalId": "4",
+			"MaintenancePackage": "4",
+			"MaintPckgTskListOpAllocIntNmbr": "4",
+			"MaintenancePackageText": "Yearly",
+			"MaintenanceTaskListOperation": "40",
+			"OperationText": "Check the shaft",
+			"MaintTaskListSubOperation": "",
+			"ChangeNumber": ""
+		}
+	],
+	"time": "2022-01-09T10:26:37.801595+09:00"
+}

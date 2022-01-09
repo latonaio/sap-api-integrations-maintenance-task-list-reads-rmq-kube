@@ -1,0 +1,74 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  labels:
+    run: sap-api-integrations-maintenance-task-list-reads-rmq-kube
+  name: sap-api-integrations-maintenance-task-list-reads-rmq-kube
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      run: sap-api-integrations-maintenance-task-list-reads-rmq-kube
+  template:
+    metadata:
+      labels:
+        run: sap-api-integrations-maintenance-task-list-reads-rmq-kube
+    spec:
+      hostname: sap-api-integrations-maintenance-task-list-reads-rmq-kube
+      containers:
+        - name: sap-api-integrations-maintenance-task-list-reads-rmq-kube
+          image: latonaio/sap-api-integrations-maintenance-task-list-reads-rmq-kube
+          imagePullPolicy: IfNotPresent
+          volumeMounts:
+            - name: data
+              mountPath: /var/lib/aion/Data
+            - name: ui
+              mountPath: /var/lib/aion/UI/sap-api-integrations-maintenance-task-list-reads-rmq-kube/public/
+          env:
+            - name: RMQ_USER
+              value: "guest"
+            - name: RMQ_PASS
+              value: "guest"
+            - name: RMQ_ADDRESS
+              value: "192.168.128.135"
+            - name: RMQ_PORT
+              value: "32094"
+            - name: RMQ_VHOST
+              value: "sap-test"
+            - name: RMQ_QUEUE_FROM
+              value: "sap-api-integrations-maintenance-task-list-reads-rmq-kube"
+            - name: RMQ_QUEUE_TO
+              value: "sap-sql-update-kube"
+            - name: SAP_API_BASE_URL
+              value: "https://sandbox.api.sap.com/s4hanacloud/sap/opu/odata/sap/"
+          resources:
+            limits:
+              cpu: "1"
+              memory: "200Mi"
+            requests:
+              cpu: "0.5"
+              memory: "100Mi"
+      volumes:
+        - name: data
+          hostPath:
+            path: /var/lib/aion/default/Data
+        - name: ui
+          hostPath:
+            path: /var/lib/aion/UI/sap-api-integrations-maintenance-task-list-reads-rmq-kube/public/
+---
+apiVersion: v1
+kind: Service
+metadata:
+  labels:
+    run: sap-api-integrations-maintenance-task-list-reads-rmq-kube
+  name: sap-api-integrations-maintenance-task-list-reads-rmq-kube
+spec:
+  selector:
+    run: sap-api-integrations-maintenance-task-list-reads-rmq-kube
+  type: NodePort
+  ports:
+    - name: api
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+      nodePort: 30518

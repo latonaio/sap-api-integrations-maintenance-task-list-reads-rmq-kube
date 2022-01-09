@@ -1,0 +1,35 @@
+{
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller/caller.go#L83",
+	"function": "sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller.(*SAPAPICaller).Header",
+	"level": "INFO",
+	"message": [
+		{
+			"TaskListType": "A",
+			"TaskListGroup": "1",
+			"TaskListGroupCounter": "1",
+			"TaskListVersionCounter": "1",
+			"MaintenancePlanningPlant": "1710",
+			"TaskListStatus": "4",
+			"TaskListStatusDesc": "Released (General)",
+			"TechnicalObject": "",
+			"TaskListUsage": "4",
+			"TaskListDesc": "EM Task list",
+			"WorkCenter": "RES-0100",
+			"MaintenanceStrategy": "EM_01",
+			"OperationSystemCondition": "0",
+			"Assembly": "",
+			"ChangeNumber": "",
+			"ValidityStartDate": "2017-06-26",
+			"ValidityEndDate": "",
+			"IsMarkedForDeletion": false,
+			"LastChangeDate": "2017-06-26",
+			"CreationDate": "2017-06-26",
+			"Plant": "1710",
+			"ResponsiblePlannerGroup": "YB1",
+			"Equipment": "",
+			"FunctionalLocationLabelName": "",
+			"TaskListIsHierarchical": false
+		}
+	],
+	"time": "2022-01-09T10:17:38.859716+09:00"
+}
