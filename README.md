@@ -73,6 +73,7 @@ sap-api-integrations-maintenance-task-list-reads-rmq-kube において、API へ
 * inoutSDC.MaintenanceTaskList.TaskListVersionCounter（タスクリストバージョンカウンタ）
 * inoutSDC.MaintenanceTaskList.Equipment（設備）
 * inoutSDC.MaintenanceTaskList.Plant（プラント）
+* inoutSDC.MaintenanceTaskList.TaskListDesc（タスクリスト説明）
 * inoutSDC.MaintenanceTaskList.StrategyPackage.TaskListSequence（タスクリスト順序）
 * inoutSDC.MaintenanceTaskList.StrategyPackage.MaintenancePackageText（保全パッケージテキスト）
 * inoutSDC.MaintenanceTaskList.StrategyPackage.Operation.TechnicalObject（技術対象）
@@ -112,7 +113,7 @@ accepter における データ種別 の指定に基づいて SAP_API_Caller �
 caller.go の func() 毎 の 以下の箇所が、指定された API をコールするソースコードです。  
 
 ```
-func (c *SAPAPICaller) AsyncGetMaintenanceTaskList(taskListType, taskListGroup, taskListGroupCounter, taskListVersionCounter, equipment, plant, taskListSequence, maintenancePackageText, technicalObject, operationText string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetMaintenanceTaskList(taskListType, taskListGroup, taskListGroupCounter, taskListVersionCounter, equipment, plant, taskListDesc, taskListSequence, maintenancePackageText, technicalObject, operationText string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
@@ -125,6 +126,11 @@ func (c *SAPAPICaller) AsyncGetMaintenanceTaskList(taskListType, taskListGroup, 
 		case "HeaderEquipmentPlant":
 			func() {
 				c.HeaderEquipmentPlant(equipment, plant)
+				wg.Done()
+			}()
+		case "TaskListDesc":
+			func() {
+				c.TaskListDesc(plant, taskListDesc)
 				wg.Done()
 			}()
 		case "StrategyPackage":

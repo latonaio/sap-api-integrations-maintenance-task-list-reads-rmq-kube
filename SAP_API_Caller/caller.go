@@ -34,7 +34,7 @@ func NewSAPAPICaller(baseUrl string, outputQueueTo []string, outputter RMQOutput
 	}
 }
 
-func (c *SAPAPICaller) AsyncGetMaintenanceTaskList(taskListType, taskListGroup, taskListGroupCounter, taskListVersionCounter, equipment, plant, taskListSequence, maintenancePackageText, technicalObject, operationText string, accepter []string) {
+func (c *SAPAPICaller) AsyncGetMaintenanceTaskList(taskListType, taskListGroup, taskListGroupCounter, taskListVersionCounter, equipment, plant, taskListDesc, taskListSequence, maintenancePackageText, technicalObject, operationText string, accepter []string) {
 	wg := &sync.WaitGroup{}
 	wg.Add(len(accepter))
 	for _, fn := range accepter {
@@ -47,6 +47,11 @@ func (c *SAPAPICaller) AsyncGetMaintenanceTaskList(taskListType, taskListGroup, 
 		case "HeaderEquipmentPlant":
 			func() {
 				c.HeaderEquipmentPlant(equipment, plant)
+				wg.Done()
+			}()
+		case "TaskListDesc":
+			func() {
+				c.TaskListDesc(plant, taskListDesc)
 				wg.Done()
 			}()
 		case "StrategyPackage":
@@ -140,6 +145,44 @@ func (c *SAPAPICaller) callMaintenanceTaskListSrvAPIRequirementHeaderEquipmentPl
 
 	c.setHeaderAPIKeyAccept(req)
     c.getQueryWithHeaderEquipmentPlant(req, equipment, plant)
+
+	resp, err := new(http.Client).Do(req)
+	if err != nil {
+		return nil, xerrors.Errorf("API request error: %w", err)
+	}
+	defer resp.Body.Close()
+	if resp.StatusCode != http.StatusOK {
+		return nil, xerrors.Errorf("API status code %d. API request failed", resp.StatusCode)
+	}
+
+	byteArray, _ := ioutil.ReadAll(resp.Body)
+	data, err := sap_api_output_formatter.ConvertToHeader(byteArray, c.log)
+	if err != nil {
+		return nil, xerrors.Errorf("convert error: %w", err)
+	}
+	return data, nil
+}
+
+func (c *SAPAPICaller) TaskListDesc(plant, taskListDesc string) {
+	data, err := c.callMaintenanceTaskListSrvAPIRequirementTaskListDesc("MaintenanceTaskList", plant, taskListDesc)
+	if err != nil {
+		c.log.Error(err)
+		return
+	}
+	err = c.outputter.Send(c.outputQueues[0], map[string]interface{}{"message": data, "function": "MaintenanceTaskListHeader"})
+	if err != nil {
+		c.log.Error(err)
+		return
+	}
+	c.log.Info(data)
+}
+
+func (c *SAPAPICaller) callMaintenanceTaskListSrvAPIRequirementTaskListDesc(api, plant, taskListDesc string) ([]sap_api_output_formatter.Header, error) {
+	url := strings.Join([]string{c.baseURL, "api_maintenancetasklist/srvd_a2x/sap/maintenancetasklist/0001", api}, "/")
+	req, _ := http.NewRequest("GET", url, nil)
+
+	c.setHeaderAPIKeyAccept(req)
+    c.getQueryWithTaskListDesc(req, plant, taskListDesc)
 
 	resp, err := new(http.Client).Do(req)
 	if err != nil {
@@ -362,6 +405,12 @@ func (c *SAPAPICaller) getQueryWithHeader(req *http.Request, taskListType, taskL
 func (c *SAPAPICaller) getQueryWithHeaderEquipmentPlant(req *http.Request, equipment, plant string) {
 	params := req.URL.Query()
 	params.Add("$filter", fmt.Sprintf("Equipment eq '%s' and Plant eq '%s'", equipment, plant))
+	req.URL.RawQuery = params.Encode()
+}
+
+func (c *SAPAPICaller) getQueryWithTaskListDesc(req *http.Request, plant, taskListDesc string) {
+	params := req.URL.Query()
+	params.Add("$filter", fmt.Sprintf("Plant eq '%s' and TaskListDesc eq '%s'", plant, taskListDesc))
 	req.URL.RawQuery = params.Encode()
 }
 

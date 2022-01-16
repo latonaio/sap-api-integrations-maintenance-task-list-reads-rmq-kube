@@ -50,13 +50,13 @@ func callProcess(caller *sap_api_caller.SAPAPICaller, msg rabbitmq.RabbitmqMessa
 			return
 		}
 	}()
-	taskListType, taskListGroup, taskListGroupCounter, taskListVersionCounter, equipment, plant, taskListSequence, maintenancePackageText, technicalObject, operationText := extractData(msg.Data())
+	taskListType, taskListGroup, taskListGroupCounter, taskListVersionCounter, equipment, plant, taskListDesc, taskListSequence, maintenancePackageText, technicalObject, operationText := extractData(msg.Data())
 	accepter := getAccepter(msg.Data())
-	caller.AsyncGetMaintenanceTaskList(taskListType, taskListGroup, taskListGroupCounter, taskListVersionCounter, equipment, plant, taskListSequence, maintenancePackageText, technicalObject, operationText, accepter)
+	caller.AsyncGetMaintenanceTaskList(taskListType, taskListGroup, taskListGroupCounter, taskListVersionCounter, equipment, plant, taskListDesc, taskListSequence, maintenancePackageText, technicalObject, operationText, accepter)
 	return nil
 }
 
-func extractData(data map[string]interface{}) (taskListType, taskListGroup, taskListGroupCounter, taskListVersionCounter, equipment, plant, taskListSequence, maintenancePackageText, technicalObject, operationText string) {
+func extractData(data map[string]interface{}) (taskListType, taskListGroup, taskListGroupCounter, taskListVersionCounter, equipment, plant, taskListDesc, taskListSequence, maintenancePackageText, technicalObject, operationText string) {
 	sdc := sap_api_input_reader.ConvertToSDC(data)
 	taskListType = sdc.MaintenanceTaskList.TaskListType
 	taskListGroup = sdc.MaintenanceTaskList.TaskListGroup
@@ -64,6 +64,7 @@ func extractData(data map[string]interface{}) (taskListType, taskListGroup, task
 	taskListVersionCounter = sdc.MaintenanceTaskList.TaskListVersionCounter
 	equipment = sdc.MaintenanceTaskList.Equipment
 	plant = sdc.MaintenanceTaskList.Plant
+	taskListDesc = sdc.MaintenanceTaskList.TaskListDesc
 	taskListSequence = sdc.MaintenanceTaskList.StrategyPackage.TaskListSequence
 	maintenancePackageText = sdc.MaintenanceTaskList.StrategyPackage.MaintenancePackageText
 	technicalObject = sdc.MaintenanceTaskList.StrategyPackage.Operation.TechnicalObject
@@ -80,7 +81,7 @@ func getAccepter(data map[string]interface{}) []string {
 
 	if accepter[0] == "All" {
 		accepter = []string{
-			"Header", "HeaderEquipmentPlant", "StrategyPackage", "StrategyPackageText",
+			"Header", "HeaderEquipmentPlant", "TaskListDesc", "StrategyPackage", "StrategyPackageText",
 			"Operation", "OperationText", "OperationMaterial",
 		}
 	}
