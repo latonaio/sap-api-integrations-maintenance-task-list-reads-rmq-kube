@@ -1,5 +1,5 @@
 {
-	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller/caller.go#L215",
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller/caller.go#L253",
 	"function": "sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller.(*SAPAPICaller).Operation",
 	"level": "INFO",
 	"message": [
@@ -196,5 +196,5 @@
 			"TechObjIsEquipOrFuncnlLoc": ""
 		}
 	],
-	"time": "2022-01-09T10:46:32.463331+09:00"
+	"time": "2022-01-28T17:57:45+09:00"
 }

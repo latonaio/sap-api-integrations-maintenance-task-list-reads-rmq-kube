@@ -1,5 +1,5 @@
 {
-	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller/caller.go#L149",
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller/caller.go#L187",
 	"function": "sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller.(*SAPAPICaller).StrategyPackage",
 	"level": "INFO",
 	"message": [
@@ -60,5 +60,5 @@
 			"ChangeNumber": ""
 		}
 	],
-	"time": "2022-01-09T10:26:37.801595+09:00"
+	"time": "2022-01-28T17:59:00+09:00"
 }

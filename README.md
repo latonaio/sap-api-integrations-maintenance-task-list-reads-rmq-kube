@@ -251,14 +251,14 @@ type Header struct {
 このように、BASE URLが "API_(リポジトリ名)_SRV" のフォーマットである API サービス の データレイアウトと、 Maintenance Task List の データレイアウトは、D、Results、Metadata、Value の配列構造を持っているか持っていないかという点が異なります。  
 
 ## Output  
-本マイクロサービスでは、[golang-logging-library](https://github.com/latonaio/golang-logging-library) により、以下のようなデータがJSON形式で出力されます。  
+本マイクロサービスでは、[golang-logging-library-for-sap](https://github.com/latonaio/golang-logging-library-for-sap) により、以下のようなデータがJSON形式で出力されます。  
 以下の sample.json の例は、SAP 保全タスクリスト の ヘッダデータ が取得された結果の JSON の例です。  
 以下の項目のうち、"TaskListType" ～ "TaskListIsHierarchical" は、/SAP_API_Output_Formatter/type.go 内 の Type Header {} による出力結果です。"cursor" ～ "time"は、golang-logging-library による 定型フォーマットの出力結果です。  
 
 ```
 {
-	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-maintenance-task-list-reads-rmq-kube/SAP_API_Caller/caller.go#L83",
-	"function": "sap-api-integrations-maintenance-task-list-reads-rmq-kube/SAP_API_Caller.(*SAPAPICaller).Header",
+	"cursor": "/Users/latona2/bitbucket/sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller/caller.go#L88",
+	"function": "sap-api-integrations-maintenance-task-list-reads/SAP_API_Caller.(*SAPAPICaller).Header",
 	"level": "INFO",
 	"message": [
 		{
@@ -289,7 +289,6 @@ type Header struct {
 			"TaskListIsHierarchical": false
 		}
 	],
-	"time": "2022-01-09T10:17:38.859716+09:00"
+	"time": "2022-01-28T17:56:51+09:00"
 }
-
 ```
